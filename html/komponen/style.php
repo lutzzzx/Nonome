@@ -56,3 +56,13 @@
     <link href="../src/assets/css/dark/components/modal.css" rel="stylesheet" type="text/css">
     <link href="../src/assets/css/dark/apps/contacts.css" rel="stylesheet" type="text/css" />
     <!-- END CONTACTS LEVEL STYLES -->   
+
+
+    <!--  BEGIN TAGIFY STYLE FILE  -->
+    <link rel="stylesheet" type="text/css" href="../src/plugins/src/tagify/tagify.css">
+    <link href="../src/assets/css/light/scrollspyNav.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../src/plugins/css/light/tagify/custom-tagify.css">
+
+    <link href="../src/assets/css/dark/scrollspyNav.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../src/plugins/css/dark/tagify/custom-tagify.css">
+    <!--  END TAGIFY STYLE FILE  -->
