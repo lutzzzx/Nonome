@@ -8,30 +8,34 @@ if (isset($_POST['btnLogin'])){
   $hash     = md5($password);
  // $ingat    = $_POST['remember'];
 
-  $sql    = "SELECT * FROM user WHERE email = '$email' AND password = '$hash'";
+  $sql    = "SELECT * FROM user WHERE email = '$email'";
   $query  = mysqli_query($connect, $sql);
   $result = mysqli_fetch_assoc($query);
   
-  if ($result['email']===$email && $result['password']===$hash){
-    $_SESSION['id_user'] = $result['id'];
-    
-    if ($ingat == 1){
-      $cookie_name  = "cookie_email";
-      $cookie_value = $email;
-      $cookie_time  = time() + (60*60*24*30);
-      setcookie($cookie_name, $cookie_value, $cookie_time,"/");
-
-      $cookie_password = "cookie_password";
-      $cookie_value    = md5($password);
-      $cookie_time     = time() + (60*60*24*30);
-      setcookie($cookie_password, $cookie_value, $cookie_time,"/");
-    }
-    header("location: index.php");
-
+  if ($result < 1){
+  ?> <script>alert("Email belum terdaftar");</script> <?php
   } else {
-    ?>
-    <script>alert('Username atau Password salah!');</script>;
-    <?php
+    if ($result['email']===$email && $result['password']===$hash){
+      $_SESSION['id_user'] = $result['id'];
+      
+      if ($ingat == 1){
+        $cookie_name  = "cookie_email";
+        $cookie_value = $email;
+        $cookie_time  = time() + (60*60*24*30);
+        setcookie($cookie_name, $cookie_value, $cookie_time,"/");
+  
+        $cookie_password = "cookie_password";
+        $cookie_value    = md5($password);
+        $cookie_time     = time() + (60*60*24*30);
+        setcookie($cookie_password, $cookie_value, $cookie_time,"/");
+      }
+      header("location: index.php");
+  
+    } else {
+      ?>
+      <script>alert('Email atau Password salah!');</script>;
+      <?php
+    }
   }
   }
 ?>
