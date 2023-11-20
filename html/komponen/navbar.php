@@ -1,3 +1,12 @@
+<?php
+include('koneksi.php');
+
+$id_user = $_SESSION['id_user'];
+$sqlview = "SELECT * FROM user WHERE id = '$id_user'";
+$queryview = mysqli_query($connect, $sqlview);
+$row = mysqli_fetch_assoc($queryview);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -136,7 +145,7 @@
                 <div class="avatar avatar-sm avatar-indicators avatar-online">
                   <img
                     alt="avatar"
-                    src="../src/assets/img/profile-21.jpeg"
+                    src="<?= $row['foto']; ?>"
                     class="rounded-circle"
                   />
                 </div>
@@ -151,13 +160,12 @@
                 <div class="media mx-auto">
                   <div class="emoji me-2">&#x1F44B;</div>
                   <div class="media-body">
-                    <h5>Shaun Park</h5>
-                    <p>Project Leader</p>
+                    <h5><?= $row['username']; ?></h5>
                   </div>
                 </div>
               </div>
               <div class="dropdown-item">
-                <a href="user-profile.html">
+                <a href="user-profile.php">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -228,7 +236,7 @@
                 </a>
               </div>
               <div class="dropdown-item">
-                <a href="auth-boxed-signin.html">
+                <a href="logout.php">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"

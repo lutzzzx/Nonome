@@ -34,7 +34,7 @@ FilePond.create(
     files: [
         {
             // the server file reference
-            source: '../src/assets/img/drag-1.jpeg',
+            file: '/absolute/path/to/html/photo-profile/default.jpg',
 
             // set type to limbo to tell FilePond this is a temp file
             options: {

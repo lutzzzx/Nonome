@@ -13,6 +13,7 @@ const taskViewScroll = new PerfectScrollbar('.task-text', {
     maxScrollbarLength:300,
     suppressScrollX : true
 });
+
 function dynamicBadgeNotification( setTodoCategoryCount ) {
   var todoCategoryCount = setTodoCategoryCount;
 
@@ -85,7 +86,6 @@ function dynamicBadgeNotification( setTodoCategoryCount ) {
 
 new dynamicBadgeNotification('allList');
 new dynamicBadgeNotification('completedList');
-new dynamicBadgeNotification('importantList');
 
 /*
   ====================
@@ -93,17 +93,7 @@ new dynamicBadgeNotification('importantList');
   ====================
 */
 
-var quill = new Quill('#taskdescription', {
-  modules: {
-    toolbar: [
-      [{ header: [1, 2, false] }],
-      ['bold', 'italic', 'underline'],
-      ['image', 'code-block']
-    ]
-  },
-  placeholder: 'Compose an epic...',
-  theme: 'snow'  // or 'bubble'
-});
+
 
 $('#addTaskModal').on('hidden.bs.modal', function (e) {
   // do something...
@@ -140,104 +130,103 @@ const ps = new PerfectScrollbar('.todo-box-scroll', {
 const todoListScroll = new PerfectScrollbar('.todoList-sidebar-scroll', {
     suppressScrollX : true
   });
+  
+  function checkCheckbox() {
+    $('.todo-item input[type="checkbox"]').each(function() {
+      var checkboxId = $(this).attr('id');
+      var isChecked = localStorage.getItem(checkboxId) === 'true';
+  
+      $(this).prop('checked', isChecked);
+      $(this).on('change', function() {
+        
+        localStorage.setItem(checkboxId, $(this).prop('checked'));
+        updateTodoItemView($(this));
 
-function checkCheckbox() {
-  $('.todo-item input[type="checkbox"]').click(function() {
-    if ($(this).is(":checked")) {
-        $(this).parents('.todo-item').addClass('todo-task-done');
+      });
+      updateTodoItemView($(this));
+    });
+
+    function updateTodoItemView(checkbox) {
+      var todoItem = checkbox.parents('.todo-item');
+      if (checkbox.is(":checked")) {
+        todoItem.addClass('todo-task-done');
+      } else {
+        todoItem.removeClass('todo-task-done');
+      }
+      new dynamicBadgeNotification('completedList');
     }
-    else if ($(this).is(":not(:checked)")) {
-        $(this).parents('.todo-item').removeClass('todo-task-done');
-    }
-    new dynamicBadgeNotification('completedList');
-  });
-}
+  }
+  
+  function taskDone(){
+    $('.todo-item input[type="checkbox"]').each(function(){
+      var checkbox   = $(this).attr('id');
+      var today      = new Date().toISOString().split('T')[0];
+      var deadFromDb = $(this).data('dead');
 
-function deleteDropdown() {
-  $('.action-dropdown .dropdown-menu .delete.dropdown-item').click(function() {
-    if(!$(this).parents('.todo-item').hasClass('todo-task-trash')) {
+      if (today === deadFromDb) {
+        checkbox.checked = true;
+      }
+    })
+  }
 
-        var getTodoParent = $(this).parents('.todo-item');
-        var getTodoClass = getTodoParent.attr('class');
+  $('.dropdown #taskDel').on('click', function(){
+    $('#addContactModalDelete').modal('show');
 
-        var getFirstClass = getTodoClass.split(' ')[1];
-        var getSecondClass = getTodoClass.split(' ')[2];
-        var getThirdClass = getTodoClass.split(' ')[3];
+    let id    = $(this).data('id')
+    $('#addContactModalDelete #deleteTask').val(id);
+  })
 
-        if (getFirstClass === 'all-list') {
-          getTodoParent.removeClass(getFirstClass);
-        }
-        if (getSecondClass === 'todo-task-done' || getSecondClass === 'todo-task-important') {
-          getTodoParent.removeClass(getSecondClass);
-        }
-        if (getThirdClass === 'todo-task-done' || getThirdClass === 'todo-task-important') {
-          getTodoParent.removeClass(getThirdClass);
-        }
-        $(this).parents('.todo-item').addClass('todo-task-trash');
-    } else if($(this).parents('.todo-item').hasClass('todo-task-trash')) {
-        $(this).parents('.todo-item').removeClass('todo-task-trash');
-    }
-    new dynamicBadgeNotification('allList');
-    new dynamicBadgeNotification('completedList');
-    new dynamicBadgeNotification('importantList');
-  });
-}
 
-function reviveMailDropdown() {
-  $('.action-dropdown .dropdown-menu .revive.dropdown-item').on('click', function(event) {
-    event.preventDefault();
-    if($(this).parents('.todo-item').hasClass('todo-task-trash')) {
-      var getTodoParent = $(this).parents('.todo-item');
-      var getTodoClass = getTodoParent.attr('class');
-      var getFirstClass = getTodoClass.split(' ')[1];
-      $(this).parents('.todo-item').removeClass(getFirstClass);
-      $(this).parents('.todo-item').addClass('all-list');
-      $(this).parents('.todo-item').hide();
-    }
-    new dynamicBadgeNotification('allList');
-    new dynamicBadgeNotification('completedList');
-    new dynamicBadgeNotification('importantList');
-  });
-}
+  $('.action-dropdown .dropdown-menu #taskEdit').on('click', function(){
+    $('#editTaskModal').modal('show');
 
-function editDropdown() {
-  $('.action-dropdown .dropdown-menu .edit.dropdown-item').click(function() {
-
-    event.preventDefault();
-
-    var $_outerThis = $(this);
-   
     $('.add-tsk').hide();
     $('.edit-tsk').show();
 
     $('.add-title').hide();
     $('.edit-title').show();
-    
 
-    var $_taskTitle = $_outerThis.parents('.todo-item').children().find('.todo-heading').attr('data-todoHeading');
-    var $_taskText = $_outerThis.parents('.todo-item').children().find('.todo-text').attr('data-todoText');
-    var $_taskJson = JSON.parse($_taskText);
+    let id    = $(this).data('id');
+    let title = $(this).data('title');
+    let desc  = $(this).data('desc');
+    let dead  = $(this).data('deadl'); 
 
-    $('#task').val($_taskTitle);
-    quill.setContents($_taskJson);
-
-    $('#addTaskModal').modal('show');
+    $('#editTaskModal #idTaskUpd').val(id);
+    $('#editTaskModal #judulTask').val(title);
+    $('#editTaskModal #taskdescription').val(desc);
+    $('#editTaskModal .deadlineupdate #dateUpdate').val(dead);    
   })
-}
 
-function todoItem() {
-  $('.todo-item .todo-content').on('click', function(event) {
-    event.preventDefault();
-   
-    var $_taskTitle = $(this).find('.todo-heading').attr('data-todoHeading');
-    var $todoHtml = $(this).find('.todo-text').attr('data-todoHtml');
 
-    $('.task-heading').text($_taskTitle);
-    $('.task-text').html($todoHtml);
-    
-    $('#todoShowListItem').modal('show');
-  });
-}
+$('.todo-content').on('click', function() {
+  let id    = $(this).data('id');
+  let title = $(this).data('title');
+  let desc  = $(this).data('desc');
+
+  // Simpan data ke elemen dengan class tertentu
+  let $todoClick = $(this).find('.todoClick');
+  $todoClick.data('id', id);
+  $todoClick.data('title', title);
+  $todoClick.data('desc', desc);
+
+  $todoClick.trigger('click');
+});
+
+$('.todoClick').on('click', function() {
+  $('#todoShowListItem').modal('show');
+  // Mengambil data dari elemen dengan class todoClick
+  let id    = $(this).data('id');
+  let title = $(this).data('title');
+  let desc  = $(this).data('desc');
+
+  $('.modal-header #idTask').val(id);
+  $('.modal-content #taskHeader').html(title);
+  $('.modal-body #taskDesc').html(desc);
+});
+
+
+
+
 var $btns = $('.list-actions').click(function() {
   if (this.id == 'all-list') {
     var $el = $('.' + this.id).fadeIn();
@@ -254,11 +243,7 @@ var $btns = $('.list-actions').click(function() {
 })
 
 checkCheckbox();
-deleteDropdown();
-reviveMailDropdown();
-editDropdown();
-todoItem();
-
+taskDone();
 
 $('.tab-title .nav-pills a.nav-link').on('click', function(event) {
   $(this).parents('.mail-box-container').find('.tab-title').removeClass('mail-menu-show')

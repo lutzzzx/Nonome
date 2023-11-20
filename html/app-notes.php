@@ -1,8 +1,9 @@
 <?php 
   include 'koneksi.php';
-
+  session_start();
   //READ NOTES
-  $query_select = 'SELECT * FROM notes';
+  $id_user = $_SESSION['id_user'];
+  $query_select = "SELECT * FROM notes WHERE id = '$id_user'";
   $data_notes = mysqli_query($connect, $query_select);
 ?>
 
@@ -13,7 +14,7 @@
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no'>
-    <title>Notes | EQUATION - Multipurpose Bootstrap Dashboard Template </title>
+    <title>Notes</title>
 </head>
 <body class=''>
     

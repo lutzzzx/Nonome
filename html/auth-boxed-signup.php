@@ -6,6 +6,11 @@ if (isset($_POST['regisbtn'])){
   $email    = $_POST['inpEmail'];
   $password = $_POST['inpPass'];
   $hash = md5($password);
+  $alamat = "-";
+  $no_hp = "-";
+  $pekerjaan = "-";
+  $foto = "photo-profile/default.jpg";
+  
 
   $sql    = "SELECT * FROM user WHERE email = '$email'";
   $query  = mysqli_query($connect, $sql);
@@ -18,7 +23,7 @@ if (isset($_POST['regisbtn'])){
     </script>"; 
     <?php
   } else {
-      $sqlins   = "INSERT INTO user (username, email, password) VALUES ('$username','$email','$hash')";
+      $sqlins   = "INSERT INTO user (foto, username, alamat, pekerjaan, email, no_hp, password) VALUES ('$foto','$username','$alamat','$pekerjaan','$email','$no_hp','$hash')";
       $queryins = mysqli_query($connect, $sqlins);
       echo "<script>
               alert('Registrasi Success');
