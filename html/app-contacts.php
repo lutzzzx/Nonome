@@ -351,7 +351,7 @@ if (isset($_POST['btndel'])){
                                         <div class="item-content">
                                             <div class="user-profile">
                                                 
-                                                <img src = "<?php echo $row['foto']; ?>" alt="avatar">
+                                                <img src = "<?php echo ($row['foto'] != "photo-contact/") ? $row['foto'] : "photo-profile/default.jpg"; ?>" alt="avatar">
                                                 <div class="user-meta-info">
                                                     <p class="user-name" ><?php echo $row['nama']; ?></p>
                                                     <p class="user-work" ><?php echo $row['pekerjaan']; ?></p>
