@@ -91,8 +91,6 @@ $(document).ready(function () {
 
   $("#btn-add-notes").on("click", function (event) {
     $("#notesMailModal").modal("show");
-    $("#btn-n-save").hide();
-    $("#btn-n-add").show();
   });
 
   // Button add

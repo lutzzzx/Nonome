@@ -66,3 +66,13 @@
     <link href="../src/assets/css/dark/scrollspyNav.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../src/plugins/css/dark/tagify/custom-tagify.css">
     <!--  END TAGIFY STYLE FILE  -->
+
+    <!--  BEGIN TOMSELECT STYLE FILE  -->
+    <link href="../src/assets/css/light/scrollspyNav.css" rel="stylesheet" type="text/css" />
+    <link href="../src/assets/css/dark/scrollspyNav.css" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" type="text/css" href="../src/plugins/src/tomSelect/tom-select.default.min.css">
+    <link rel="stylesheet" type="text/css" href="../src/plugins/css/light/tomSelect/custom-tomSelect.css">
+    <link rel="stylesheet" type="text/css" href="../src/plugins/css/dark/tomSelect/custom-tomSelect.css">
+    
+    <!--  END TOMSELECT STYLE FILE  -->

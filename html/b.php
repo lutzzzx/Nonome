@@ -55,7 +55,7 @@
       $id = $_GET['delete_tag'];
       $stmt_delete = mysqli_query($connect, "DELETE FROM tags WHERE id=$id");
       $stmt_delete_tags = mysqli_query($connect, "DELETE FROM tag_note WHERE tag_id=$id");
-      header("Location: app-notes.php");
+      header("Location: b.php");
     }
     if (isset($_GET['editTagId'])) {
       $id = $_GET['editTagId'];
@@ -233,7 +233,7 @@
                                                             </button>
                                                             <div class='dropdown-menu'>
                                                                 <a href='#' id='tampilkanEditTag' data-idtag='$data[id]' class='dropdown-item'>Edit</a>
-                                                                <a href='app-notes.php?delete_tag=$data[id]' class='dropdown-item'>Hapus</a>
+                                                                <a href='b.php?delete_tag=$data[id]' class='dropdown-item'>Hapus</a>
                                                             </div>
                                                         </div>
                                                         
@@ -296,7 +296,7 @@
                                 <div class='modal-dialog modal-dialog-centered' role='document'>
                                     <div class='modal-content'>
                                         <div class='modal-header'>
-                                            <h5 class='modal-title add-title' id='notesMailModalTitleeLabel'>Add Note</h5>
+                                            <h5 class='modal-title add-title' id='notesMailModalTitleeLabel'>Add Task</h5>
                                             <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'>
                                               <svg aria-hidden='true' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-x'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg>
                                             </button>
@@ -550,7 +550,7 @@
                 }
             }
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "app-notes.php", true);
+            xhr.open("POST", "b.php", true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
@@ -580,7 +580,7 @@
                 }
             }
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "app-notes.php", true);
+            xhr.open("POST", "b.php", true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
@@ -606,7 +606,7 @@
 
             // Mengirim permintaan AJAX
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "app-notes.php", true);
+            xhr.open("POST", "b.php", true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
@@ -625,7 +625,7 @@
 
             // Mengirim permintaan AJAX
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "app-notes.php", true);
+            xhr.open("POST", "b.php", true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
@@ -644,7 +644,7 @@
 
             // Mengirim permintaan AJAX
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "app-notes.php", true);
+            xhr.open("POST", "b.php", true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
@@ -660,7 +660,7 @@
         function toggleEdit(id) {
             event.preventDefault();
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "app-notes.php", true);
+            xhr.open("POST", "b.php", true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
@@ -696,7 +696,7 @@
         $(document).on('click', '.tampilkanModal', function(){
           var idNote = $(this).data('idnote');
           localStorage.setItem('modalStatus', 'show');
-          window.location.href = "app-notes.php?editNoteId=" + idNote;
+          window.location.href = "b.php?editNoteId=" + idNote;
         });
       });
     </script>
@@ -714,7 +714,7 @@
         $(document).on('click', '#tampilkanEditTag', function(){
           var idTag = $(this).data('idtag');
           localStorage.setItem('modalStatus', 'editTag');
-          window.location.href = "app-notes.php?editTagId=" + idTag;
+          window.location.href = "b.php?editTagId=" + idTag;
         });
       });
     </script>
@@ -731,7 +731,7 @@
           event.preventDefault();
           var tag = document.getElementById('tag-name').value;
           var xhr = new XMLHttpRequest();
-          xhr.open("POST", "app-notes.php", true);
+          xhr.open("POST", "b.php", true);
           xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
           xhr.onreadystatechange = function() {
               if (xhr.readyState == 4 && xhr.status == 200) {
@@ -756,7 +756,7 @@
           var id = document.getElementById('edit-tag-id').value;
           var tag = document.getElementById('edit-tag-name').value;
           var xhr = new XMLHttpRequest();
-          xhr.open("POST", "app-notes.php", true);
+          xhr.open("POST", "b.php", true);
           xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
           xhr.onreadystatechange = function() {
               if (xhr.readyState == 4 && xhr.status == 200) {

@@ -1,7 +1,10 @@
 <?php // ==================== INSERT =========================
     include('koneksi.php');
     session_start();
-
+    if (!isset($_SESSION['id_user'])) {
+      header("Location: auth-boxed-signin.php");
+      exit();
+    }
     $id_user = $_SESSION['id_user'];
     $view = "SELECT * FROM contact WHERE id_user = '$id_user'";
     $queryv = mysqli_query($connect, $view);
